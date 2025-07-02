@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.lippia</groupId>
+        <artifactId>root</artifactId>
+        <version>3.3.0.3</version>
+    </parent>
+
+    <groupId>com.Crowdar</groupId>
+    <artifactId>lippia-api-example-project</artifactId>
+    <name>api-rest-automation</name>
+    <packaging>jar</packaging>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <base.api.url>https://reqres.in/api/users</base.api.url>
+        <cucumber.stepsDefinitions>--glue ar/steps --glue com/crowdar/api/rest</cucumber.stepsDefinitions>
+        <cucumber.hooks>--glue com/crowdar/bdd/cukes --glue ar/apiExampleProject/hook</cucumber.hooks>
+        <cucumber.tags>@Smoke</cucumber.tags>
+        <crowdar.cucumber.plugins>--plugin pretty --plugin api.report.CucumberReporter:</crowdar.cucumber.plugins>
+        <crowdar.extent.host.name>LocalMachine</crowdar.extent.host.name>
+        <crowdar.extent.environment>Local</crowdar.extent.environment>
+        <crowdar.extent.user.name>User.name</crowdar.extent.user.name>
+        <test-manager.report>--plugin api.report.TestManagerReporter:</test-manager.report>
+		<crowdar.cucumber.option>src/test/resources/features ${cucumber.hooks} ${cucumber.stepsDefinitions} --tags 'not @Ignore' --tags ${cucumber.tags} ${crowdar.cucumber.plugins}</crowdar.cucumber.option>
+        <crowdar.projectType>API</crowdar.projectType>
+    </properties>
+    <profiles>
+        <profile>
+            <id>Secuencial</id>
+            <activation>
+            </activation>
+            <properties>
+                <apiExample.runner>testngSecuencial.xml</apiExample.runner>
+            </properties>
+        </profile>
+        <profile>
+            <id>Paralelo</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <apiExample.runner>testngParalell.xml</apiExample.runner>
+            </properties>
+        </profile>
+
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <!--   Profiles related to Runners ejecutions         -->
+        <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+        <profile>
+            <id>secuencial</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <runner>testngSecuencial.xml</runner>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>parallel</id>
+            <properties>
+                <runner>testngParallel.xml</runner>
+            </properties>
+        </profile>
+
+    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>io.lippia</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.lippia.report</groupId>
+            <artifactId>ltm-cucumber4-adapter</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.lippia.report</groupId>
+            <artifactId>extentreports-cucumber4-adapter</artifactId>
+            <version>1.1.0.10</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <filters>
+            <filter>src/main/resources/cucumber.properties</filter>
+        </filters>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${apiExample.runner}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <TEST_MANAGER_USERNAME></TEST_MANAGER_USERNAME>
+                        <TEST_MANAGER_PASSWORD></TEST_MANAGER_PASSWORD>
+                        <TEST_MANAGER_API_HOST></TEST_MANAGER_API_HOST>
+                        <TEST_MANAGER_API_PORT></TEST_MANAGER_API_PORT>
+                        <TEST_MANAGER_RUN_NAME></TEST_MANAGER_RUN_NAME>
+                        <TEST_MANAGER_PROJECT_CODE></TEST_MANAGER_PROJECT_CODE>
+                        <TEST_MANAGER_REPOSITORY_URL></TEST_MANAGER_REPOSITORY_URL>
+                        <TEST_MANAGER_REPOSITORY_BRANCH></TEST_MANAGER_REPOSITORY_BRANCH>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+	</repositories>
+
+
+</project>

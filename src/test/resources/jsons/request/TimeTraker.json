@@ -1,0 +1,14 @@
+{
+  "url": "https://api.clockify.me/api",
+  "endpoint": "/v1/workspaces/{{workspaceId}}/user/{{idCliente}}/time-entries",
+  "headers": {
+    "x-api-key": "{{apikey}}",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "start": "{{start}}",
+    "end": "{{end}}",
+    "description": "{{description}}",
+    "userId": "{{idCliente}}"
+  }
+}
