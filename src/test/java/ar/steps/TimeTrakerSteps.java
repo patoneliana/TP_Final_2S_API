@@ -5,6 +5,7 @@ import api.config.EntityConfiguration;
 import api.model.TimeTrakerMod.TimeTrakerModel;
 import com.crowdar.api.rest.APIManager;
 import com.crowdar.core.PageSteps;
+import com.crowdar.core.PropertyManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -25,9 +26,7 @@ import utils.FechaConversion;
 
 public class TimeTrakerSteps extends PageSteps {
     @Given("El apiKey es igual (.*)$")
-    public void elApiKeyEsIgualApiKey(String apiKey) {
-        API_KEY.set(apiKey);
-    }
+    public void elApiKeyEsIgualApiKey(String apiKey) { API_KEY.set(apiKey);    }
 
     @And("workspaces asignado igual a {string}")
     public void workspacesAsignadoIgualA(String workspacesId) {
@@ -39,7 +38,7 @@ public class TimeTrakerSteps extends PageSteps {
         ID_CLIENTE.set(userId);
     }
 
-    @When("'(.*)' a la API clockify, para entidad '(.*)', la uri '(.*)' y parametros '(.*)'")
+    @When("'(.*)' en clockify, para entidad '(.*)', la uri '(.*)' y parametros '(.*)'")
     public void doRequest(String methodName, String entity, String jsonName, String jsonReplacementValues) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InstantiationException {
         Class entityService = EntityConfiguration.valueOf(entity).getEntityService();
         Map<String, String> parameters = getParameters(jsonReplacementValues);
@@ -60,27 +59,26 @@ public class TimeTrakerSteps extends PageSteps {
         return parameters;
     }
 
-    @And("se muestra lista de horas registradas")
-    public void seMuestraListaDeHorasRegistradas() {
+    @And("se lista las horas que estan registradas")
+    public void seListaHorasRegistradas() {
 
         TimeTrakerModel[] response = (TimeTrakerModel[]) APIManager.getLastResponse().getResponse();
-        Assert.assertTrue(response.length > 0, "[WARNING] La lista esta vacia");
+        Assert.assertTrue(response.length > 0, "[WARNING] Lista vacia");
 
         for (TimeTrakerModel e : response) {
-            System.out.println("ID: " + e.getId());
-            System.out.println("Description: " + e.getDescription());
-            System.out.println("timeInterval:");
-            System.out.println("\tstart: " + e.getTimeInterval().getStart());
-            System.out.println("\tend: " + e.getTimeInterval().getEnd());
-            System.out.println("\tduration: " + e.getTimeInterval().getDuration());
+            System.out.println("****************************************************************************************");
+            System.out.println("Codigo: " + e.getId());
+            System.out.println("Descripcion: " + e.getDescription());
+            System.out.println("Intervalo de tiempo: ");
+            System.out.print("\tinicio: " + e.getTimeInterval().getStart());
+            System.out.print("\tfin: " + e.getTimeInterval().getEnd());
+            System.out.print("\tduracion: " + e.getTimeInterval().getDuration());
             System.out.println("");
         }
     }
 
     @Given("apiKey asignado igual a {string}")
-    public void apikeyAsignadoIgualA(String apiKey) {
-        API_KEY.set(apiKey);
-    }
+    public void apikeyAsignadoIgualA(String apiKey) {  API_KEY.set(apiKey);    }
 
     @Given("registro hora inicio {string}, fin {string} y una descripcion {string}")
     public void registroHoraInicioFinYUnaDescripcion(String start, String end, String description) {

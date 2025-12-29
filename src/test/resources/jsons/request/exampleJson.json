@@ -1,6 +1,0 @@
-{
-  "endpoint": "/2",
-  "headers": {
-    "Content-Type": "application/json"
-  }
-}

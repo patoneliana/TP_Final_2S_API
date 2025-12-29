@@ -2,7 +2,7 @@ package services;
 
 
 import api.model.TimeTrakerMod.TimeTrakerModel;
-import api.model.clients.ClientModel;
+//import api.model.clients.ClientModel;
 import com.crowdar.api.rest.Response;
 
 import java.util.HashMap;
