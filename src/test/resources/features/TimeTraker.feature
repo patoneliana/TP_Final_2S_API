@@ -6,7 +6,7 @@ Feature: TimeTraker
     And user asignado igual a "694ea2a3b7eb812c95e4f2b5"
 
 
-  @TimeTraker @TimeTraker-obtieneHoras
+  @TimeTraker @Smoke @TimeTraker-obtieneHoras
   Scenario Outline: Consultar horas registradas
     When '<operation>' en clockify, para entidad '<entity>', la uri '<jsonName>' y parametros ''
     Then validar que el status code sea 200
@@ -16,7 +16,7 @@ Feature: TimeTraker
       | operation | entity     | jsonName   |
       | GET       | TIMETRAKER | TimeTraker |
 
-  @TimeTraker @TimeTraker-agregaHoras
+  @TimeTraker @Regression @TimeTraker-agregaHoras
   Scenario Outline: Agregar horas a un proyecto
     Given registro hora inicio "<start>", fin "<end>" y una descripcion "<description>"
     When '<operation>' en clockify, para entidad '<entity>', la uri '<jsonName>' y parametros ''
@@ -28,7 +28,7 @@ Feature: TimeTraker
       | POST      | TIMETRAKER | TimeTraker | 2025-12-25T10:00:00Z | 2025-12-25T11:00:00Z | Horas EBPG TP Final 2S  | PT1H     |
 
 
-  @TimeTraker @TimeTraker-editHoras
+  @TimeTraker @Regression @TimeTraker-editHoras
   Scenario Outline: Editar un registro de hora
     Given registro hora inicio "2025-12-25T10:00:00Z", fin "2025-12-25T11:00:00Z" y una descripcion "Horas EBPG TP Final 2S"
     And 'POST' en clockify, para entidad 'TIMETRAKER', la uri 'TimeTraker' y parametros ''
@@ -43,7 +43,7 @@ Feature: TimeTraker
       | PUT       | TIMEENTRIES | TimeEntries | 2025-12-25T10:00:00Z | 2025-12-25T11:00:00Z | Horas EBPG TP Final 2S | PT1H     |
 
 
-  @TimeTraker @TimeTraker-eliminaHoras
+  @TimeTraker @Regression @TimeTraker-eliminaHoras
   Scenario Outline: Eliminar hora registrada
     Given registro hora inicio "2025-12-25T10:00:00Z", fin "2025-12-25T11:00:00Z" y una descripcion "Horas EBPG TP Final 2S"
     And 'POST' en clockify, para entidad 'TIMETRAKER', la uri 'TimeTraker' y parametros ''
